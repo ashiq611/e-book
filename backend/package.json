@@ -1,0 +1,24 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "e-book api project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.ts"
+  },
+  "keywords": [
+    "rest",
+    "api",
+    "express",
+    "ebook"
+  ],
+  "author": "Ashiq <ashiqur.rahman.dev@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.7.3",
+    "nodemon": "^3.1.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
+  }
+}
