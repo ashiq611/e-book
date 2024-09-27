@@ -1,5 +1,4 @@
 import express from 'express';
-import { stat } from 'fs';
 
 const app = express();
 
