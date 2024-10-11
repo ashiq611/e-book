@@ -1,19 +1,24 @@
-import express, { NextFunction, Request, Response } from 'express';
-import createHttpError from 'http-errors';
+import express from 'express';
+// import createHttpError from 'http-errors';
 import globalErrorHandler from './middlewares/globarErrorHandlers';
+import userRouter from './users/user.router';
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 
 // routes
 app.get('/', (req, res) => {
-    const error = createHttpError(500, "Internal server error");
-    throw error;
+    // const error = createHttpError(500, "Internal server error");
+    // throw error;
     res.json({
         status: "success",
         message: "Backend is running"
     });
 });
+
+app.use('/api/v1/users',userRouter);
 
 
 // golbal error handler
