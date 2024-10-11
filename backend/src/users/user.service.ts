@@ -28,3 +28,24 @@ export const createUserService = async (body: User) => {
     return token;
     
 }
+
+
+export const loginUserService = async (body: User) => {
+    const { email, password } = body;
+
+    const user = await userModel.findOne({ email });
+    if(!user) {
+        throw createHttpError(404, "User not found");
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if(!isMatch) {
+        throw createHttpError(401, "Invalid email or password");
+    }
+
+    const token = sign({sub: user._id}, config.jwtSecret as string, {
+        expiresIn: "7d"
+    })
+
+    return token;
+}
