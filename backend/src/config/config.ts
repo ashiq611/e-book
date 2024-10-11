@@ -3,7 +3,8 @@ conf();
 
 // Purpose: Configuration file for the backend server.
 const _config = {
-    port : process.env.PORT
+    port : process.env.PORT,
+    dbUrl : process.env.MONGO_URL,
 
 
 }
