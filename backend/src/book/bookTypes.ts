@@ -11,3 +11,16 @@ export interface Book {
     updateAt: Date;
 
 }
+
+interface File {
+    mimetype: string;
+    filename: string;
+}
+
+export interface Files {
+    coverImage: File[];
+}
+
+export interface BookFile {
+    file: File[];
+}
