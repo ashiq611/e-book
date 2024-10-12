@@ -4,6 +4,7 @@ import { BookFile, Files } from "./bookTypes";
 import fs from 'fs';
 import userModel from "../users/user.model";
 import createHttpError from "http-errors";
+import { AuthRequest } from "../middlewares/verifyUser";
 
 export const createBook = async (req: Request,
     res: Response,
@@ -17,7 +18,8 @@ export const createBook = async (req: Request,
             const {filePath: cover_path, uploadResult: cover_url} = await uploadCover(coverFiles);
             const {filePath: book_path, uploadResult: book_url} = await bookUplaod(bookFiles);
 
-            const user = await userModel.findById("6709295c867481355919a68d");
+            const _req = req as AuthRequest
+            const user = await userModel.findById(_req.userId);
 
             if (!user) {
                throw createHttpError(404, "User not found");
