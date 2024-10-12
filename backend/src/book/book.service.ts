@@ -1,6 +1,7 @@
 import cloudinary from "../config/cloudinary";
 import path from "node:path";
-import { BookFile, Files } from "./bookTypes";
+import { Book, BookFile, Files } from "./bookTypes";
+import bookModel from "./book.model";
 
 
 
@@ -15,7 +16,12 @@ export const uploadCover = async(files: Files) => {
         formate: coverImageMimeType
     });
 
-    console.log("cover image uploaded", uploadResult);
+    // console.log("cover image uploaded", uploadResult);
+
+    return {
+        filePath,
+        uploadResult
+    }
 
 }
 
@@ -30,5 +36,25 @@ export const bookUplaod = async (files : BookFile) => {
         formate: "pdf",
     });
 
-    console.log("file uploaded", uploadResult);
+    // console.log("file uploaded", uploadResult);
+    return {
+        filePath,
+        uploadResult
+    };
+}
+
+
+export const createBookService = async ({title, author, genre, coverImage, file} : Book) => {
+
+    const newBook = await bookModel.create({
+        title,
+        author,
+        genre,
+        coverImage,
+        file
+    });
+    return newBook._id
+
+    
+ 
 }

@@ -1,14 +1,14 @@
 import { User } from "../users/userTypes";
 
 export interface Book {
-    _id: string;
+    _id?: string;
     title: string;
     author: User;
     genre: string;
     coverImage: string;
     file: string;
-    createAt: Date;
-    updateAt: Date;
+    createAt?: Date;
+    updateAt?: Date;
 
 }
 
