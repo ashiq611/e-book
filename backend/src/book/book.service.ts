@@ -58,3 +58,11 @@ export const createBookService = async ({title, author, genre, coverImage, file}
     
  
 }
+
+
+export const updateBookService = async (bookId: string, update: Partial<Book>) => {
+    const updatedBook = await bookModel.findByIdAndUpdate(bookId, update, {
+        new: true
+    });
+    return updatedBook;
+}
