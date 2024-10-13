@@ -132,3 +132,59 @@ export const listBooks = async (req: Request,
                 next(err);
             }
 }
+
+
+export const singleBookById = async (req: Request,
+    res: Response,
+    next: NextFunction): Promise<void> => {
+        const bookId = req.params.bookId;
+        try{
+            const book = await bookModel.findOne({ _id: bookId });
+            if (!book) {
+                throw createHttpError(404, "Book not found");
+            }
+            res.status(200).json({
+                status: "success",
+                message: "Book fetched successfully",
+                book    
+            });
+
+        }catch(err){
+            next(err);
+        }
+
+    }
+
+
+    export const deleteBook = async (req: Request,
+        res: Response,
+        next: NextFunction): Promise<void> => {
+            const bookId = req.params.bookId;
+            try{
+                const book = await bookModel.findOne({ _id: bookId });
+                if (!book) {
+                    throw createHttpError(404, "Book not found");
+                }
+                const _req = req as AuthRequest
+                if(book.author._id.toString() !== _req.userId) {
+                    throw createHttpError(401, "Unauthorized");
+                }
+                const coverFileSplit = book.coverImage.split("/");
+                const coverImagePublicId = coverFileSplit.at(-2) + "/" + coverFileSplit.at(-1)?.split(".").at(-2);
+                await cloudinary.uploader.destroy(coverImagePublicId);
+                const bookFileSplit = book.file.split("/");
+                const bookFilePublicId = bookFileSplit.at(-2) + "/" + bookFileSplit.at(-1)
+                await cloudinary.uploader.destroy(bookFilePublicId, {
+                    resource_type: "raw",
+                });
+                await bookModel.deleteOne({ _id: bookId });
+                res.status(204).json({
+                    status: "success",
+                    message: "Book deleted successfully",
+                    deletedBookID: bookId
+                });
+        
+            }catch(err){
+                next(err);
+            
+        }}
