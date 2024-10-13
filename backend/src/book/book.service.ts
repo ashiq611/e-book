@@ -13,7 +13,7 @@ export const uploadCover = async(files: Files) => {
     const uploadResult = await cloudinary.uploader.upload(filePath, {
         filename_override: fileName,
         folder: 'book-covers',
-        formate: coverImageMimeType
+        format: coverImageMimeType
     });
 
     // console.log("cover image uploaded", uploadResult);
@@ -33,7 +33,7 @@ export const bookUplaod = async (files : BookFile) => {
         resource_type: "raw",
         filename_override: fileName,
         folder: 'book-pdfs',
-        formate: "pdf",
+        format: "pdf",
     });
 
     // console.log("file uploaded", uploadResult);

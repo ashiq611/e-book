@@ -71,12 +71,13 @@ export const updateBook = async (req: Request,
             let completedCoverImage = "";
             if(files['coverImage']) {
                 const filename = files['coverImage'][0].filename;
-                // const coverMimeType = files['coverImage'][0].mimetype.split("/")[1];
+                const coverMimeType = files['coverImage'][0].mimetype.split("/")[1];
                 const filePath = path.resolve(__dirname, `../../public/data/uploads`, filename);
                 completedCoverImage = filename;
                 const uploadResult = await cloudinary.uploader.upload(filePath, {
                     filename_override: completedCoverImage,
                     folder: 'book-covers',
+                    format: coverMimeType
                 });
                 completedCoverImage = uploadResult.secure_url;
                 await fs.promises.unlink(filePath);
@@ -91,6 +92,7 @@ export const updateBook = async (req: Request,
                     resource_type: "raw",
                     filename_override: completeFileName,
                     folder: 'book-pdfs',
+                    format: "pdf",
                 });
                 completeFileName = uploadResult.secure_url;
                 await fs.promises.unlink(bookFilePath);
