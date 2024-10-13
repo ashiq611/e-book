@@ -115,3 +115,20 @@ export const updateBook = async (req: Request,
             next(err);
         }
 }
+
+
+export const listBooks = async (req: Request,
+    res: Response,
+    next: NextFunction): Promise<void> => {
+        try{
+            const books = await bookModel.find();
+            res.status(200).json({
+                status: "success",
+                message: "Books fetched successfully",
+                books,
+            });
+        
+            }catch(err){
+                next(err);
+            }
+}
