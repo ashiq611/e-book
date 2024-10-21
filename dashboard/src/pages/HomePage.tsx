@@ -1,9 +1,14 @@
 
+import Layout from "@/layout/Layout"
 
-function HomePage() {
+
+function HomePage()  {
   return (
-    <div>HomePage</div>
-  )
+      <Layout>
+        <h1>hello, welcome to the dashboard</h1>
+
+      </Layout>
+    )
 }
 
 export default HomePage
