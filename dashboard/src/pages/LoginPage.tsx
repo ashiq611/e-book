@@ -1,8 +1,11 @@
+import { LoginForm } from "@/components/login-form"
 
 
 function LoginPage() {
   return (
-    <div>LoginPage</div>
+    <div className="flex h-screen w-full items-center justify-center">
+      <LoginForm/>
+    </div>
   )
 }
 
