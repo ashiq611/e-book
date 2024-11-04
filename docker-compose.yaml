@@ -1,0 +1,37 @@
+services:
+  e-book-backend-container:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+
+    ports:
+      - "5513:5513"
+
+    volumes:
+      - ./backend:/app #bind mount
+      - /app/node_modules #anonymous volume
+
+    env_file:
+      - ./backend/.env
+
+  e-book-frontend-container:
+    build:
+      context: ./dashboard
+      dockerfile: Dockerfile
+
+    ports:
+      - "5173:5173"
+    
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+
+    volumes:
+      - ./dashboard:/app
+      -  /app/node_modules 
+
+    # env_file:
+      # - ./dashboard/.env.local
+
+    depends_on:
+      - e-book-backend-container
+
